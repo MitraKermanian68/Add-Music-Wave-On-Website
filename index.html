@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Music Wave On Website</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="hero">
+      <div class="music">
+        <img src="./Images/cover 1.jpg" draggable="false" />
+        <div class="info">
+          <h1>Music Title Music Title Music Title</h1>
+          <p>Album Name Album Name Album Name</p>
+          <div id="waveform">
+            <!-- the waveform will be rendered here -->
+          </div>
+          <div class="controls">
+            <img src="./Images/play.webp" id="playBtn" />
+            <img src="./Images/stop-icon.png" id="stopBtn" />
+            <img src="./Images/volume.png" id="volumeBtn" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      var playBtn = document.getElementById("playBtn");
+      var stopBtn = document.getElementById("stopBtn");
+      var volumeBtn = document.getElementById("volumeBtn");
+
+      import WaveSurfer from "https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js";
+
+      const wavesurfer = WaveSurfer.create({
+        container: "#waveform",
+        waveColor: "#dde5ec",
+        progressColor: "#03cebf",
+        url: "/Images/Ashamaluevmusic - Tropics.mp3",
+        barwidth: 4,
+        height: 90,
+        resposponsive: true,
+        barRadius: 4,
+        hideScrollbar: true,
+      });
+
+      wavesurfer.on("interaction", () => {
+        wavesurfer.play();
+      });
+
+      playBtn.addEventListener("click", () => {
+        wavesurfer.playPause();
+        if (playBtn.src.includes("play.webp")) {
+          playBtn.src = "./Images/pause.png";
+        } else {
+          playBtn.src = "./Images/play.webp";
+        }
+      });
+      stopBtn.addEventListener("click", () => {
+        wavesurfer.stop();
+        playBtn.src = "./Images/play.webp";
+      });
+      volumeBtn.addEventListener("click", () => {
+        wavesurfer.toggleMute();
+        if (volumeBtn.src.includes("volume.png")) {
+          volumeBtn.src = "./Images/mute.png";
+        } else {
+          volumeBtn.src = "./Images/volume.png";
+        }
+      });
+      wavesurfer.on("pause", function () {
+        playBtn.src = "./Images/play.webp";
+        wavesurfer.stop();
+      });
+    </script>
+  </body>
+</html>
